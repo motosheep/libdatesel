@@ -25,16 +25,19 @@ public class MainActivity extends AppCompatActivity {
                 DateMain.getInstance().show(MainActivity.this, 1);
             }
         });
-        DateMain.getInstance().setOnDateListener(new DateMain.DateSelInfoCallBack() {
-            @Override
-            public void Date(DateSelResult result) {
-                Log.d(TAG, "选择的日期: " + new Gson().toJson(result));
-            }
-        });
+        DateMain.getInstance().setOnDateListener(callBack);
     }
+
+    private DateMain.DateSelInfoCallBack callBack = new DateMain.DateSelInfoCallBack() {
+        @Override
+        public void Date(DateSelResult result) {
+            Log.d(TAG, "选择的日期: " + new Gson().toJson(result));
+        }
+    };
 
     @Override
     protected void onDestroy() {
+        DateMain.getInstance().removeDateListener(callBack);
         super.onDestroy();
     }
 }
