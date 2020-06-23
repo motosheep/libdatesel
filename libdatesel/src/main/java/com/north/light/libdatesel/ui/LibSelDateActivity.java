@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.north.light.libdatesel.DateMain;
 import com.north.light.libdatesel.R;
+import com.north.light.libdatesel.bean.DateSelResult;
 import com.north.light.libdatesel.widget.DivNumberPicker;
 
 import java.util.ArrayList;
@@ -28,13 +30,20 @@ public class LibSelDateActivity extends LibDateBaseActivity {
     private TextView mCancel;
     private TextView mConfirm;
 
-    //数据集合
+    //数据集合__混合文字
     private List<String> mYearList = new ArrayList<>();
     private List<String> mMonthList = new ArrayList<>();
     private List<String> mDayList = new ArrayList<>();
     private List<String> mHourList = new ArrayList<>();
     private List<String> mMinuteList = new ArrayList<>();
     private List<String> mSecondList = new ArrayList<>();
+    //纯数字
+    private List<Integer> mYearNumList = new ArrayList<>();
+    private List<Integer> mMonthNumList = new ArrayList<>();
+    private List<Integer> mDayNumList = new ArrayList<>();
+    private List<Integer> mHourNumList = new ArrayList<>();
+    private List<Integer> mMinuteNumList = new ArrayList<>();
+    private List<Integer> mSecondNumList = new ArrayList<>();
 
 
     @Override
@@ -56,8 +65,92 @@ public class LibSelDateActivity extends LibDateBaseActivity {
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //数据回调
+                int yearPos = mYearPicker.getValue();
+                int monthPos = mMonthPicker.getValue();
+                int dayPos = mDayPicker.getValue();
+                int hourPos = mHourPicker.getValue();
+                int minutePos = mMinutePicker.getValue();
+                int secondPos = mSecondPicker.getValue();
+                DateSelResult selResult = new DateSelResult();
+                //1年月日时分秒，2年月日时分 3年月日时，4年月日，5时分秒，6时分
+                switch (mType) {
+                    case 1:
+                        selResult.setYear(mYearNumList.get(yearPos).toString());
+                        selResult.setMonth(mMonthNumList.get(monthPos).toString());
+                        selResult.setDay(mDayNumList.get(dayPos).toString());
+                        selResult.setHour(mHourNumList.get(hourPos).toString());
+                        selResult.setMinute(mMinuteNumList.get(minutePos).toString());
+                        selResult.setSecond(mSecondNumList.get(secondPos).toString());
+                        break;
+                    case 2:
+                        selResult.setYear(mYearNumList.get(yearPos).toString());
+                        selResult.setMonth(mMonthNumList.get(monthPos).toString());
+                        selResult.setDay(mDayNumList.get(dayPos).toString());
+                        selResult.setHour(mHourNumList.get(hourPos).toString());
+                        selResult.setMinute(mMinuteNumList.get(minutePos).toString());
+                        break;
+                    case 3:
+                        selResult.setYear(mYearNumList.get(yearPos).toString());
+                        selResult.setMonth(mMonthNumList.get(monthPos).toString());
+                        selResult.setDay(mDayNumList.get(dayPos).toString());
+                        break;
+                    case 4:
+                        selResult.setYear(mYearNumList.get(yearPos).toString());
+                        selResult.setMonth(mMonthNumList.get(yearPos).toString());
+                        selResult.setDay(mDayNumList.get(yearPos).toString());
+                        break;
+                    case 5:
+                        selResult.setHour(mHourNumList.get(hourPos).toString());
+                        selResult.setMinute(mMinuteNumList.get(minutePos).toString());
+                        selResult.setSecond(mSecondNumList.get(secondPos).toString());
+                    case 6:
+                        selResult.setHour(mHourNumList.get(hourPos).toString());
+                        selResult.setMinute(mMinuteNumList.get(minutePos).toString());
+                        break;
+                }
+                DateMain.getInstance().onSelData(selResult);
+                finish();
             }
         });
+
+        //选择年会影响到日__选择年以后，重置月份，重置日
+        mYearPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mMonthPicker.setValue(0);
+                setDayByMonth(mYearNumList.get(newVal), mMonthNumList.get(0));
+            }
+        });
+        //选择月会影响到日
+        mMonthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                //设置日
+                setDayByMonth(mYearNumList.get(mYearPicker.getValue()), mMonthNumList.get(newVal));
+            }
+        });
+    }
+
+    /**
+     * 传入月份设置日期
+     */
+    private void setDayByMonth(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        //注意减去1，是因为月份从0开始
+        calendar.set(Calendar.MONTH, month - 1);
+        int curDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);//当前月份有多少天
+        mDayList.clear();
+        mDayNumList.clear();
+        for (int i = 1; i <= curDay; i++) {
+            mDayList.add(String.format("%02d", i) + "日");
+            mDayNumList.add(i);
+        }
+        mDayPicker.setDisplayedValues(null);
+        mDayPicker.setMaxValue(mDayList.size() - 1); //设置最大值
+        mDayPicker.setDisplayedValues(mDayList.toArray(new String[mDayList.size()]));
+        mDayPicker.setValue(0);
     }
 
     private void initView() {
@@ -102,27 +195,33 @@ public class LibSelDateActivity extends LibDateBaseActivity {
 
         for (int i = endYear; i >= startYear; i--) {
             mYearList.add(i + "年");
+            mYearNumList.add(i);
         }
         //月
         for (int i = 1; i <= 12; i++) {
             mMonthList.add(String.format("%02d", i) + "月");
+            mMonthNumList.add(i);
         }
         //日
         int curDay = curCal.getActualMaximum(Calendar.DAY_OF_MONTH);//当前月份有多少天
         for (int i = 1; i <= curDay; i++) {
             mDayList.add(String.format("%02d", i) + "日");
+            mDayNumList.add(i);
         }
         //时
         for (int i = 1; i <= 24; i++) {
             mHourList.add(String.format("%02d", i) + "时");
+            mHourNumList.add(i);
         }
         //分
         for (int i = 1; i <= 60; i++) {
             mMinuteList.add(String.format("%02d", i) + "分");
+            mMinuteNumList.add(i);
         }
         //秒
         for (int i = 1; i <= 60; i++) {
             mSecondList.add(String.format("%02d", i) + "秒");
+            mSecondNumList.add(i);
         }
         //设置数据----------------------------------------------------------
         //获取当前初始化数据__月日时分秒
@@ -133,7 +232,7 @@ public class LibSelDateActivity extends LibDateBaseActivity {
         int cSecond = curCal.get(Calendar.SECOND) - 1;//秒
 
         mYearPicker.setDisplayedValues(mYearList.toArray(new String[mYearList.size()]));
-        mYearPicker.setMaxValue(mYearList.size() - 1); //设置最大值，最大值是datas[3]
+        mYearPicker.setMaxValue(mYearList.size() - 1); //设置最大值
         mYearPicker.setWrapSelectorWheel(true);
         mYearPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS); //禁止输入
 

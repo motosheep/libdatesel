@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.north.light.libdatesel.bean.DateSelResult;
 import com.north.light.libdatesel.ui.LibSelDateActivity;
 
-import java.util.Calendar;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -15,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 描述：时间管理外部调用类
  */
 public class DateMain {
-    private CopyOnWriteArrayList<AddressSelInfoCallBack> mListenerList = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<DateSelInfoCallBack> mListenerList = new CopyOnWriteArrayList<>();
 
     private static final class SingleHolder {
         private static final DateMain mInstance = new DateMain();
@@ -30,9 +29,9 @@ public class DateMain {
      */
     public void onSelData(DateSelResult result) {
         if (result != null && mListenerList.size() != 0) {
-            for (AddressSelInfoCallBack listener : mListenerList) {
+            for (DateSelInfoCallBack listener : mListenerList) {
                 if (listener != null) {
-                    listener.Address(result);
+                    listener.Date(result);
                 }
             }
         }
@@ -53,18 +52,18 @@ public class DateMain {
     /**
      * 地址选择回调-------------------------------------------------------------------------------
      */
-    public interface AddressSelInfoCallBack {
-        void Address(DateSelResult result);
+    public interface DateSelInfoCallBack {
+        void Date(DateSelResult result);
     }
 
-    public void setOnAddressListener(AddressSelInfoCallBack mListener) {
+    public void setOnDateListener(DateSelInfoCallBack mListener) {
         if (mListener == null) {
             return;
         }
         mListenerList.add(mListener);
     }
 
-    public void removeAddressListener(AddressSelInfoCallBack mListener) {
+    public void removeDateListener(DateSelInfoCallBack mListener) {
         if (mListener == null) {
             return;
         }
@@ -72,8 +71,8 @@ public class DateMain {
     }
 
 
-    public static void main(String[] args){
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-    }
+//    public static void main(String[] args){
+//        int year = Calendar.getInstance().get(Calendar.YEAR);
+//    }
 
 }
