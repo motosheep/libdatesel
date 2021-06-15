@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.north.light.libdatesel.bean.DateSelResult;
+import com.north.light.libdatesel.ui.LibSelDateXActivity;
 import com.north.light.libdatesel.ui.LibSelDateActivity;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -45,6 +46,14 @@ public class DateMain {
     public void show(Activity activity, int type) {
         Intent intent = new Intent(activity, LibSelDateActivity.class);
         intent.putExtra(LibSelDateActivity.CODE_REQUEST, type);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 启动地址选择器--多视图选择模式
+     */
+    public void showX(Activity activity) {
+        Intent intent = new Intent(activity, LibSelDateXActivity.class);
         activity.startActivity(intent);
     }
 

@@ -1,13 +1,14 @@
-package com.north.light.libdatesel.ui;
+package com.north.light.libdatesel.base;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.north.light.libdatesel.R;
 
@@ -16,7 +17,7 @@ import com.north.light.libdatesel.R;
  * create by lzt
  * data 2019/12/8
  */
-public abstract class LibDateBaseActivity extends Activity {
+public abstract class LibDateBaseActivity extends AppCompatActivity {
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

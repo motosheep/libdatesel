@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DateMain.getInstance().show(MainActivity.this, 1);
+//                DateMain.getInstance().show(MainActivity.this, 1);
+                DateMain.getInstance().showX(MainActivity.this);
             }
         });
         DateMain.getInstance().setOnDateListener(callBack);

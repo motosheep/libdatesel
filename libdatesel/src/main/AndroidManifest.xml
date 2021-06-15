@@ -4,8 +4,11 @@
 
     <application>
         <activity
+            android:name=".ui.LibSelDateXActivity"
+            android:theme="@style/AppTranslucent" />
+        <activity
             android:name=".ui.LibSelDateActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.TranslucentDecor" />
+            android:theme="@style/AppTranslucent"/>
     </application>
 
 </manifest>
