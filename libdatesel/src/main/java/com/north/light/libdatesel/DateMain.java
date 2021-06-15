@@ -38,7 +38,7 @@ public class DateMain {
     }
 
     /**
-     * 启动地址选择
+     * 启动地址选择--number picker模式
      *
      * @param type 1年月日时分秒，2年月日时分 3年月日时，4年月日，5时分秒，6时分
      */
@@ -69,10 +69,5 @@ public class DateMain {
         }
         mListenerList.remove(mListener);
     }
-
-
-//    public static void main(String[] args){
-//        int year = Calendar.getInstance().get(Calendar.YEAR);
-//    }
 
 }
