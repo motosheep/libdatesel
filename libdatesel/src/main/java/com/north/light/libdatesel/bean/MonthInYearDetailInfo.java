@@ -17,6 +17,14 @@ public class MonthInYearDetailInfo implements Serializable {
      */
     private String dayOfMonth;
     /**
+     * 月份
+     * */
+    private String month;
+    /**
+     * 年份
+     * */
+    private String year;
+    /**
      * 日期相关信息
      */
     private List<DayInfo> dayInfoList = new ArrayList<>();
@@ -63,5 +71,21 @@ public class MonthInYearDetailInfo implements Serializable {
 
     public void setDayInfoList(List<DayInfo> dayInfoList) {
         this.dayInfoList = dayInfoList;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 }

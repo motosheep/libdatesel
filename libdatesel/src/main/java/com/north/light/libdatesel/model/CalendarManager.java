@@ -80,6 +80,8 @@ public class CalendarManager {
             //月份的天数
             int dayOfMonth = cacheCal.getActualMaximum(Calendar.DAY_OF_MONTH);
             detailInfo.setDayOfMonth(String.valueOf(dayOfMonth));
+            detailInfo.setYear(year);
+            detailInfo.setMonth(getFixString(i));
             //详细的天数信息
             for (int j = 0; j < dayOfMonth; j++) {
                 MonthInYearDetailInfo.DayInfo dayInfo = new MonthInYearDetailInfo.DayInfo();
@@ -119,7 +121,7 @@ public class CalendarManager {
             if (i == 1 && dayOfWeek != 1) {
                 //上个月
                 String[] lastMonth = getLastMonthWithDate(year, month, -1);
-                monthCalendar.setTime(format.parse(lastMonth[0] + "-"  + lastMonth[1] + "-01"));
+                monthCalendar.setTime(format.parse(lastMonth[0] + "-" + lastMonth[1] + "-01"));
                 int lastMonthTotalDay = monthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
                 //1号不是星期一,补充前面的日期
                 int supplyCount = dayOfWeek - 1;
@@ -130,12 +132,13 @@ public class CalendarManager {
                     DayInMonthDetailInfo supCache = new DayInMonthDetailInfo();
                     supCache.setDataType(2);
                     supCache.setDayOfNum(getFixString(lastMonthTotalDay - sup));
-                    monthCalendar.setTime(format.parse(lastMonth[0] + "-"  + lastMonth[1] + "-"  + (lastMonthTotalDay - sup)));
+                    monthCalendar.setTime(format.parse(lastMonth[0] + "-" + lastMonth[1] + "-" + (lastMonthTotalDay - sup)));
                     int lastDayOfWeek = monthCalendar.get(Calendar.DAY_OF_WEEK) - 1;
                     supCache.setDayOfWeek(getFixString(lastDayOfWeek));
+                    supCache.setYear(year);
                     supCache.setMonth(lastMonth[1]);
                     supCache.setMonthDay(String.valueOf(supplyCount));
-                    result.add(0,supCache);
+                    result.add(0, supCache);
                 }
             }
             //正常数据---------------
@@ -145,12 +148,13 @@ public class CalendarManager {
             normalCache.setMonthDay(String.valueOf(dayOfMonth));
             normalCache.setDayOfWeek(getFixString(dayOfWeek));
             normalCache.setDayOfNum(getFixString(i));
+            normalCache.setYear(year);
             result.add(normalCache);
             //补充数据---------------最后一天并且不为星期天，补充
             if (i == dayOfMonth && dayOfWeek != 0) {
                 //上个月
                 String[] futureMonth = getLastMonthWithDate(year, month, 1);
-                monthCalendar.setTime(format.parse(futureMonth[0] + "-"  + futureMonth[1] + "-01"));
+                monthCalendar.setTime(format.parse(futureMonth[0] + "-" + futureMonth[1] + "-01"));
                 int futureMonthTotalDay = monthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
                 //补充的天数
                 int futureCount = 7 - dayOfWeek;
@@ -158,11 +162,12 @@ public class CalendarManager {
                     DayInMonthDetailInfo supCache = new DayInMonthDetailInfo();
                     supCache.setDataType(3);
                     supCache.setDayOfNum(getFixString(sup + 1));
-                    monthCalendar.setTime(format.parse(futureMonth[0] + "-"  + futureMonth[1] + "-"  + (sup + 1)));
+                    monthCalendar.setTime(format.parse(futureMonth[0] + "-" + futureMonth[1] + "-" + (sup + 1)));
                     int futureDayOfWeek = monthCalendar.get(Calendar.DAY_OF_WEEK) - 1;
                     supCache.setDayOfWeek(getFixString(futureDayOfWeek));
                     supCache.setMonth(futureMonth[1]);
                     supCache.setMonthDay(String.valueOf(futureCount));
+                    supCache.setYear(year);
                     result.add(supCache);
                 }
             }

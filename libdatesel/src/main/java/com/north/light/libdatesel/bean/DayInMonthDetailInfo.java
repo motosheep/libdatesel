@@ -10,7 +10,10 @@ import java.io.Serializable;
  * 描述：月份中，日期的详细信息
  */
 public class DayInMonthDetailInfo implements Serializable {
-
+    /**
+     * 年份
+     * */
+    private String year;
     /**
      * 星期几：0为星期天
      */
@@ -31,6 +34,14 @@ public class DayInMonthDetailInfo implements Serializable {
      * 数据类型：1当月数据 2上个月补充的数据 3下个月补充的数据
      */
     private int dataType = 1;
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 
     public String getDayOfWeek() {
         return dayOfWeek;
