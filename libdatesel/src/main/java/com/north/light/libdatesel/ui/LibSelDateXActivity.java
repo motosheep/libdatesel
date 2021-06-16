@@ -31,7 +31,7 @@ public class LibSelDateXActivity extends LibDateBaseActivity {
 
     private void initEvent() {
         //加载年费fragment
-        changeContent(1);
+        changeContent(2);
     }
 
     /**

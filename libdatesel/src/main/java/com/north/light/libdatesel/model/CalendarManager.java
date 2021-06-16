@@ -48,7 +48,7 @@ public class CalendarManager {
      */
     public String getYear(int interval) throws Exception {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        return String.valueOf(currentYear + interval);
+        return getFixString(currentYear + interval);
     }
 
     /**
@@ -56,7 +56,15 @@ public class CalendarManager {
      */
     public String getMonth(int interval) throws Exception {
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
-        return String.valueOf(currentMonth + interval);
+        return getFixString(currentMonth + interval);
+    }
+
+    /**
+     * 获取当前日
+     */
+    public String getDay(int interval) throws Exception {
+        int currentMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        return getFixString(currentMonth + interval);
     }
 
     /**
@@ -144,7 +152,7 @@ public class CalendarManager {
             //正常数据---------------
             DayInMonthDetailInfo normalCache = new DayInMonthDetailInfo();
             normalCache.setDataType(1);
-            normalCache.setMonth(month);
+            normalCache.setMonth(getFixString(Integer.parseInt(month)));
             normalCache.setMonthDay(String.valueOf(dayOfMonth));
             normalCache.setDayOfWeek(getFixString(dayOfWeek));
             normalCache.setDayOfNum(getFixString(i));
