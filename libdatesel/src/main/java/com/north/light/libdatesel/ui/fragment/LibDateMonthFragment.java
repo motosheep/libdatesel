@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -32,23 +33,23 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
     /**
      * 当前的年份
      */
-    private String currentYear = "2021";
+    private String currentYear = "";
     /**
      * 当前的月份
      */
-    private String currentMonth = "6";
+    private String currentMonth = "";
     /**
      * 当前的日期
      */
-    private String currentDay = "1";
+    private String currentDay = "";
     /**
      * 选择的年份
      */
-    private String selectYear = "2021";
+    private String selectYear = "";
     /**
      * 选择的月份
      */
-    private String selectMonth = "05";
+    private String selectMonth = "";
     /**
      * viewpager移动时的缓存参数
      */
@@ -69,6 +70,10 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
      * 月份显示控件
      */
     private TextView mMonthTV;
+    /**
+     * 切换到年份显示的控件
+     * */
+    private LinearLayout mChangeYearLL;
 
     public static LibDateMonthFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -113,6 +118,7 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
     private void initView() {
         mYearTV = getRootView().findViewById(R.id.fragment_lib_date_month_title_year);
         mMonthTV = getRootView().findViewById(R.id.fragment_lib_date_month_title_month);
+        mChangeYearLL = getRootView().findViewById(R.id.fragment_lib_date_month_title_change_year);
         try {
             selectYear = DateMemoryInfo.getInstance().getCurrentYear();
             if (TextUtils.isEmpty(selectYear)) {
@@ -144,7 +150,7 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
         });
         updateTime();
         //移动position到对应的月份
-        mViewPager.setCurrentItem(Integer.parseInt(currentMonth) - 1, true);
+        mViewPager.setCurrentItem(Integer.parseInt(selectMonth) - 1, true);
     }
 
     private void initEvent() {
@@ -188,6 +194,13 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
                         break;
                 }
                 return false;
+            }
+        });
+        mChangeYearLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //切换到年份视图
+                changeContent(1);
             }
         });
     }

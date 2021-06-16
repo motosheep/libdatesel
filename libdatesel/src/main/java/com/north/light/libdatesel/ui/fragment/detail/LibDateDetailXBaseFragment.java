@@ -19,9 +19,10 @@ public abstract class LibDateDetailXBaseFragment extends LibDateBaseFragment {
      */
     public String[] getYearAndMonth(int position) {
         try {
-            return ((LibDateMonthFragment)getParentFragment()).getCurrentData(position);
+            return ((LibDateMonthFragment) getParentFragment()).getCurrentData(position);
         } catch (Exception e) {
             return new String[5];
         }
     }
+
 }

@@ -7,7 +7,6 @@ import com.north.light.libdatesel.R;
 import com.north.light.libdatesel.base.LibDateBaseActivity;
 import com.north.light.libdatesel.base.LibStatusBarUtils;
 import com.north.light.libdatesel.memory.DateMemoryInfo;
-import com.north.light.libdatesel.model.CalendarManager;
 import com.north.light.libdatesel.ui.fragment.LibDateMonthFragment;
 import com.north.light.libdatesel.ui.fragment.LibDateYearFragment;
 
@@ -51,13 +50,13 @@ public class LibSelDateXActivity extends LibDateBaseActivity {
         switch (type) {
             case 1:
                 getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .setCustomAnimations(R.anim.scale_in, R.anim.scale_out)
                         .replace(R.id.activity_lib_sel_date_content, LibDateYearFragment.newInstance())
                         .commitAllowingStateLoss();
                 break;
             case 2:
                 getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .setCustomAnimations(R.anim.scale_in, R.anim.scale_out)
                         .replace(R.id.activity_lib_sel_date_content, LibDateMonthFragment.newInstance())
                         .commitAllowingStateLoss();
                 break;

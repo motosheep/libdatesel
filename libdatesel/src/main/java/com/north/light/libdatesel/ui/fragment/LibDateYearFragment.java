@@ -2,16 +2,16 @@ package com.north.light.libdatesel.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
-
-import androidx.annotation.Nullable;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.north.light.libdatesel.R;
-import com.north.light.libdatesel.bean.DayInMonthDetailInfo;
 import com.north.light.libdatesel.bean.MonthInYearDetailInfo;
+import com.north.light.libdatesel.memory.DateMemoryInfo;
 import com.north.light.libdatesel.model.CalendarManager;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +22,14 @@ import java.util.Map;
  * 描述：年份选择fragment
  */
 public class LibDateYearFragment extends LibDateXBaseFragment {
+    /**
+     * 切换到月份显示控件
+     */
+    private LinearLayout mChangeMonthLL;
+    /**
+     * 当前年份控件
+     */
+    private TextView mCurrentYearTV;
 
     public static LibDateYearFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -37,13 +45,17 @@ public class LibDateYearFragment extends LibDateXBaseFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void onFragmentFirstVisible() {
+        super.onFragmentFirstVisible();
         initView();
+        initEvent();
     }
 
     private void initView() {
+        mChangeMonthLL = getRootView().findViewById(R.id.fragment_lib_date_year_title_root);
+        mCurrentYearTV = getRootView().findViewById(R.id.fragment_lib_date_year_title_year);
         try {
+            updateUI();
             Log.d("result", "时间1：" + System.currentTimeMillis());
             Map<String, MonthInYearDetailInfo> info = CalendarManager.getInstance().getMonthByYear("2021");
             Log.d("result", "时间2：" + System.currentTimeMillis());
@@ -52,4 +64,24 @@ public class LibDateYearFragment extends LibDateXBaseFragment {
             e.printStackTrace();
         }
     }
+
+
+    private void initEvent() {
+        mChangeMonthLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //切换到月份
+                changeContent(2);
+            }
+        });
+    }
+
+    /**
+     * 更新视觉
+     */
+    private void updateUI() {
+        String currentYear = DateMemoryInfo.getInstance().getCurrentYear();
+        mCurrentYearTV.setText(currentYear + "年");
+    }
+
 }

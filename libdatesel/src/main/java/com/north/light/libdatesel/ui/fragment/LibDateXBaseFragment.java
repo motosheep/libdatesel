@@ -1,6 +1,7 @@
 package com.north.light.libdatesel.ui.fragment;
 
 import com.north.light.libdatesel.base.LibDateBaseFragment;
+import com.north.light.libdatesel.ui.LibSelDateXActivity;
 
 /**
  * Created by lzt
@@ -11,5 +12,16 @@ import com.north.light.libdatesel.base.LibDateBaseFragment;
  */
 public abstract class LibDateXBaseFragment extends LibDateBaseFragment {
 
+    /**
+     * 切换fragment
+     *
+     * @param type 1年份 2月份
+     */
+    public void changeContent(int type) {
+        try {
+            ((LibSelDateXActivity) getActivity()).changeContent(type);
+        } catch (Exception e) {
+        }
+    }
 
 }
