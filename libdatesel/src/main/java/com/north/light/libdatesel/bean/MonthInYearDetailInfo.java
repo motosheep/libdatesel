@@ -18,44 +18,16 @@ public class MonthInYearDetailInfo implements Serializable {
     private String dayOfMonth;
     /**
      * 月份
-     * */
+     */
     private String month;
     /**
      * 年份
-     * */
+     */
     private String year;
     /**
      * 日期相关信息
      */
-    private List<DayInfo> dayInfoList = new ArrayList<>();
-
-    public static class DayInfo implements Serializable {
-        /**
-         * 天
-         */
-        private String day;
-        /**
-         * 星期几:0开始，星期天开始
-         */
-        private String dayOfWeek;
-
-        public String getDay() {
-            return day;
-        }
-
-        public void setDay(String day) {
-            this.day = day;
-        }
-
-        public String getDayOfWeek() {
-            return dayOfWeek;
-        }
-
-        public void setDayOfWeek(String dayOfWeek) {
-            this.dayOfWeek = dayOfWeek;
-        }
-    }
-
+    private List<DayInMonthDetailInfo> dayInfoList = new ArrayList<>();
 
     public String getDayOfMonth() {
         return dayOfMonth;
@@ -65,11 +37,11 @@ public class MonthInYearDetailInfo implements Serializable {
         this.dayOfMonth = dayOfMonth;
     }
 
-    public List<DayInfo> getDayInfoList() {
+    public List<DayInMonthDetailInfo> getDayInfoList() {
         return dayInfoList;
     }
 
-    public void setDayInfoList(List<DayInfo> dayInfoList) {
+    public void setDayInfoList(List<DayInMonthDetailInfo> dayInfoList) {
         this.dayInfoList = dayInfoList;
     }
 

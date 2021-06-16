@@ -45,7 +45,7 @@ public class LibDateYearFragment extends LibDateXBaseFragment {
     private void initView() {
         try {
             Log.d("result", "时间1：" + System.currentTimeMillis());
-            List<DayInMonthDetailInfo> info = CalendarManager.getInstance().getDayByMonth("2021","1");
+            Map<String, MonthInYearDetailInfo> info = CalendarManager.getInstance().getMonthByYear("2021");
             Log.d("result", "时间2：" + System.currentTimeMillis());
             Log.d("result", new Gson().toJson(info));
         } catch (Exception e) {

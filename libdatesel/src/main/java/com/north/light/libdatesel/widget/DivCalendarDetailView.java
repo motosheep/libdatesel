@@ -2,6 +2,7 @@ package com.north.light.libdatesel.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +41,20 @@ public class DivCalendarDetailView extends LinearLayout {
      */
     private List<DivCalendarDetailInfo> mData = new ArrayList<>();
 
+    /**
+     * 绘制布局runnable
+     */
+    private DataRunnable mDataRunnable;
+
+    /**
+     * 模式：1月份模式  2年份模式
+     */
+    private int mode = 1;
+
+    //控件实际宽高
+    private int width;
+    private int height;
+
 
     public DivCalendarDetailView(Context context) {
         this(context, null);
@@ -54,9 +69,23 @@ public class DivCalendarDetailView extends LinearLayout {
         init();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        width = getMeasuredWidth();
+        height = getMeasuredHeight();
+    }
+
     private void init() {
         setGravity(Gravity.CENTER_HORIZONTAL);
         setOrientation(LinearLayout.VERTICAL);
+    }
+
+    /**
+     * 设置模式，不同模式点击的效果也不同
+     */
+    private void setMode(int mode) {
+        this.mode = mode;
     }
 
 
@@ -65,7 +94,19 @@ public class DivCalendarDetailView extends LinearLayout {
      *
      * @param currentTime 格式yyyyMMdd
      */
-    public void setData(List<DivCalendarDetailInfo> org, String currentTime) throws Exception {
+    public void setData(final List<DivCalendarDetailInfo> org, final String currentTime) throws Exception {
+        if (mDataRunnable != null) {
+            this.removeCallbacks(mDataRunnable);
+            mDataRunnable = null;
+        }
+        mDataRunnable = new DataRunnable(org, currentTime);
+        this.postDelayed(mDataRunnable, 200);
+    }
+
+    /**
+     * 设置数据
+     */
+    public void setDataRunnable(final List<DivCalendarDetailInfo> org, final String currentTime) {
         removeAllViews();
         if (org == null || org.size() == 0) {
             return;
@@ -79,10 +120,11 @@ public class DivCalendarDetailView extends LinearLayout {
         LinearLayout.LayoutParams titleRootParams = (LayoutParams) titleRoot.getLayoutParams();
         titleRootParams.width = LayoutParams.MATCH_PARENT;
         titleRootParams.height = LayoutParams.WRAP_CONTENT;
-        titleRootParams.setMargins(0, 0, 0, 20);
+        titleRootParams.setMargins(0, 0, 0, width / 54);
         titleRoot.setLayoutParams(titleRootParams);
         titleRoot.setGravity(Gravity.CENTER);
         titleRoot.setOrientation(LinearLayout.HORIZONTAL);
+        Log.d(getClass().getSimpleName(), "width:" + width);
         //添加头部控件
         for (int i = 0; i < 7; i++) {
             TextView titleDesc = new TextView(getContext());
@@ -94,7 +136,7 @@ public class DivCalendarDetailView extends LinearLayout {
             titleDesc.setLayoutParams(descParams);
             titleDesc.setGravity(Gravity.CENTER);
             titleDesc.setTextColor(getContext().getResources().getColor(R.color.color_4D000000));
-            titleDesc.setTextSize(10);
+            titleDesc.setTextSize(width / 90);
             titleDesc.setText(changeDigitalToChinese(i + 1));
         }
         //内容控件
@@ -107,7 +149,7 @@ public class DivCalendarDetailView extends LinearLayout {
             LinearLayout.LayoutParams contentRootParams = (LayoutParams) contentRoot.getLayoutParams();
             contentRootParams.width = LayoutParams.MATCH_PARENT;
             contentRootParams.height = LayoutParams.WRAP_CONTENT;
-            contentRootParams.setMargins(0, 0, 0, 60);
+            contentRootParams.setMargins(0, 0, 0, width / 18);
             contentRoot.setLayoutParams(contentRootParams);
             contentRoot.setGravity(Gravity.CENTER);
             contentRoot.setOrientation(LinearLayout.HORIZONTAL);
@@ -130,8 +172,8 @@ public class DivCalendarDetailView extends LinearLayout {
                 ImageView mBg = new ImageView(getContext());
                 contentRel.addView(mBg);
                 RelativeLayout.LayoutParams imgParams = (RelativeLayout.LayoutParams) mBg.getLayoutParams();
-                imgParams.height = 120;
-                imgParams.width = 120;
+                imgParams.height = width / 9;
+                imgParams.width = width / 9;
                 imgParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 mBg.setLayoutParams(imgParams);
                 if (detailInfo.getCurrentDay() == 1) {
@@ -152,31 +194,56 @@ public class DivCalendarDetailView extends LinearLayout {
                 } else {
                     detailTV.setTextColor(getContext().getResources().getColor(R.color.color_4D000000));
                 }
-                detailTV.setTextSize(18);
+                detailTV.setTextSize(width / 56);
                 detailTV.setText(detailInfo.getDay());
                 final int finalCount = count;
                 detailTV.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mListener != null) {
-                            mListener.detail(detailInfo);
+                            if (mode == 1) {
+                                mListener.dayDetail(detailInfo);
+                            } else if (mode == 2) {
+                                mListener.monthDetail(detailInfo);
+                            }
                         }
-                        for (int j = 0; j < mData.size(); j++) {
-                            if (j == finalCount) {
-                                //当前选中的
-                                mData.get(finalCount).setCurrentSel(1);
-                                mSelBgList.get(j).setImageResource(R.drawable.shape_date_sel_day_of_month_sel_bg);
-                            } else {
-                                if(mData.get(j).getCurrentSel()==1){
-                                    mData.get(j).setCurrentSel(0);
-                                    mSelBgList.get(j).setImageResource(R.drawable.shape_date_sel_day_of_month_alpha_bg);
+                        if (mode == 1) {
+                            for (int j = 0; j < mData.size(); j++) {
+                                if (j == finalCount) {
+                                    //当前选中的
+                                    mData.get(finalCount).setCurrentSel(1);
+                                    mSelBgList.get(j).setImageResource(R.drawable.shape_date_sel_day_of_month_sel_bg);
+                                } else {
+                                    if (mData.get(j).getCurrentSel() == 1) {
+                                        mData.get(j).setCurrentSel(0);
+                                        mSelBgList.get(j).setImageResource(R.drawable.shape_date_sel_day_of_month_alpha_bg);
+                                    }
                                 }
                             }
                         }
+
                     }
                 });
                 count++;
             }
+        }
+    }
+
+    /**
+     * 设置数据runnable
+     */
+    private class DataRunnable implements Runnable {
+        List<DivCalendarDetailInfo> org;
+        String currentTime;
+
+        public DataRunnable(final List<DivCalendarDetailInfo> org, final String currentTime) {
+            this.org = org;
+            this.currentTime = currentTime;
+        }
+
+        @Override
+        public void run() {
+            setDataRunnable(org, currentTime);
         }
     }
 
@@ -205,13 +272,19 @@ public class DivCalendarDetailView extends LinearLayout {
 
     @Override
     protected void onDetachedFromWindow() {
+        if (mDataRunnable != null) {
+            this.removeCallbacks(mDataRunnable);
+            mDataRunnable = null;
+        }
         super.onDetachedFromWindow();
         mListener = null;
     }
 
     //监听事件
     public interface OnClickListener {
-        public void detail(DivCalendarDetailInfo info);
+        public void dayDetail(DivCalendarDetailInfo info);
+
+        public void monthDetail(DivCalendarDetailInfo info);
     }
 
     public void setOnClickListener(OnClickListener listener) {

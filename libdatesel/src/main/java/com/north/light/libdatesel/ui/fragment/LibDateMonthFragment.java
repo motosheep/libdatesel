@@ -1,6 +1,7 @@
 package com.north.light.libdatesel.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -40,8 +41,15 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onFragmentFirstVisible() {
+        super.onFragmentFirstVisible();
         initView();
     }
+
 
     private void initView() {
         try {

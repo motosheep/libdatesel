@@ -90,17 +90,8 @@ public class CalendarManager {
             detailInfo.setDayOfMonth(String.valueOf(dayOfMonth));
             detailInfo.setYear(year);
             detailInfo.setMonth(getFixString(i));
-            //详细的天数信息
-            for (int j = 0; j < dayOfMonth; j++) {
-                MonthInYearDetailInfo.DayInfo dayInfo = new MonthInYearDetailInfo.DayInfo();
-                String curDay = getFixString(j + 1);
-                dayInfo.setDay(curDay);
-                cacheCal.setTime(mDayFormat.parse(year + "-" + getFixString(i) + "-" +
-                        getFixString(j + 1)));
-                int dayOfWeek = cacheCal.get(Calendar.DAY_OF_WEEK) - 1;
-                dayInfo.setDayOfWeek(String.valueOf(dayOfWeek));
-                detailInfo.getDayInfoList().add(dayInfo);
-            }
+            List<DayInMonthDetailInfo> monthList = getDayByMonth(year, getFixString(i));
+            detailInfo.setDayInfoList(monthList);
             result.put(String.valueOf(i), detailInfo);
         }
         return result;
