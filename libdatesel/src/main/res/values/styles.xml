@@ -1,6 +1,9 @@
 <resources>
 
 
+    <style name="AppNormal" parent="Theme.AppCompat.NoActionBar">
+    </style>
+
     <style name="AppTranslucent" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/color_00000000</item>

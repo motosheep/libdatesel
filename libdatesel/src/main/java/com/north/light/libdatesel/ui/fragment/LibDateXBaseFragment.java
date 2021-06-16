@@ -1,7 +1,5 @@
 package com.north.light.libdatesel.ui.fragment;
 
-import androidx.fragment.app.Fragment;
-
 import com.north.light.libdatesel.base.LibDateBaseFragment;
 
 /**
@@ -12,7 +10,6 @@ import com.north.light.libdatesel.base.LibDateBaseFragment;
  * 描述：基础日期选择库
  */
 public abstract class LibDateXBaseFragment extends LibDateBaseFragment {
-
 
 
 }

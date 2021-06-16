@@ -2,7 +2,6 @@ package com.north.light.libdatesel.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -88,7 +87,6 @@ public class DivCalendarDetailView extends LinearLayout {
         this.mode = mode;
     }
 
-
     /**
      * 设置数据
      *
@@ -100,7 +98,7 @@ public class DivCalendarDetailView extends LinearLayout {
             mDataRunnable = null;
         }
         mDataRunnable = new DataRunnable(org, currentTime);
-        this.postDelayed(mDataRunnable, 200);
+        this.postDelayed(mDataRunnable, 20);
     }
 
     /**
@@ -124,7 +122,6 @@ public class DivCalendarDetailView extends LinearLayout {
         titleRoot.setLayoutParams(titleRootParams);
         titleRoot.setGravity(Gravity.CENTER);
         titleRoot.setOrientation(LinearLayout.HORIZONTAL);
-        Log.d(getClass().getSimpleName(), "width:" + width);
         //添加头部控件
         for (int i = 0; i < 7; i++) {
             TextView titleDesc = new TextView(getContext());
@@ -230,6 +227,19 @@ public class DivCalendarDetailView extends LinearLayout {
     }
 
     /**
+     * 清空选中的数据
+     */
+    public void clearSelectStatus() {
+        for (int j = 0; j < mData.size(); j++) {
+            if (mData.get(j).getCurrentSel() == 1) {
+                //当前选中的
+                mData.get(j).setCurrentSel(0);
+                mSelBgList.get(j).setImageResource(R.drawable.shape_date_sel_day_of_month_alpha_bg);
+            }
+        }
+    }
+
+    /**
      * 设置数据runnable
      */
     private class DataRunnable implements Runnable {
@@ -265,7 +275,7 @@ public class DivCalendarDetailView extends LinearLayout {
             case 6:
                 return "六";
             case 7:
-                return "七";
+                return "日";
         }
         return "";
     }

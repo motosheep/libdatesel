@@ -208,7 +208,7 @@ public class CalendarManager {
     /**
      * 获取两位数格式的字符串，不够则补充0
      */
-    private String getFixString(int org) {
+    public String getFixString(int org) {
         String format = String.format("%02d", org);
         return format;
     }

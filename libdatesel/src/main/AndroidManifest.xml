@@ -5,7 +5,7 @@
     <application>
         <activity
             android:name=".ui.LibSelDateXActivity"
-            android:theme="@style/AppTranslucent" />
+            android:theme="@style/AppNormal" />
         <activity
             android:name=".ui.LibSelDateActivity"
             android:theme="@style/AppTranslucent"/>
