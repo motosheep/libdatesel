@@ -205,11 +205,6 @@ public class DivCalendarDetailView extends LinearLayout {
                 detailTV.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mListener != null) {
-                            if (mode == 1) {
-                                mListener.dayDetail(detailInfo);
-                            }
-                        }
                         if (mode == 1) {
                             for (int j = 0; j < mData.size(); j++) {
                                 if (j == finalCount) {
@@ -224,7 +219,11 @@ public class DivCalendarDetailView extends LinearLayout {
                                 }
                             }
                         }
-
+                        if (mListener != null) {
+                            if (mode == 1) {
+                                mListener.dayDetail(detailInfo);
+                            }
+                        }
                     }
                 });
                 count++;

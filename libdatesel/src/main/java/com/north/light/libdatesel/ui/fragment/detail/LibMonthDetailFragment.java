@@ -1,14 +1,18 @@
 package com.north.light.libdatesel.ui.fragment.detail;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.north.light.libdatesel.DateMain;
 import com.north.light.libdatesel.R;
+import com.north.light.libdatesel.bean.DateSelResult;
 import com.north.light.libdatesel.bean.DayInMonthDetailInfo;
 import com.north.light.libdatesel.memory.DateMemoryInfo;
 import com.north.light.libdatesel.utils.CalendarTrainUtils;
+import com.north.light.libdatesel.widget.DivCalendarDetailInfo;
 import com.north.light.libdatesel.widget.DivCalendarDetailView;
 
 import java.util.HashMap;
@@ -97,6 +101,27 @@ public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
         } catch (Exception e) {
             position = 1;
         }
+        mCalendarView.setOnDateClickListener(new DivCalendarDetailView.OnClickListener() {
+            @Override
+            public void dayDetail(DivCalendarDetailInfo info) {
+                //结束并且回调
+                Log.d(TAG, "选择的日期：" + info.getYear() + info.getMonth() + info.getDay());
+                DateSelResult result = new DateSelResult();
+                result.setYear(info.getYear());
+                result.setMonth(info.getMonth());
+                result.setDay(info.getDay());
+                result.setHour("00");
+                result.setMinute("00");
+                result.setSecond("00");
+                DateMain.getInstance().onSelData(result);
+                getActivity().finish();
+            }
+
+            @Override
+            public void monthDetail(String year, String month) {
+
+            }
+        });
         //根据当前的位置，获取需要查询数据的年份和月份
         getData();
     }
