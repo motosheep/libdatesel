@@ -72,7 +72,7 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
     private TextView mMonthTV;
     /**
      * 切换到年份显示的控件
-     * */
+     */
     private LinearLayout mChangeYearLL;
 
     public static LibDateMonthFragment newInstance() {
@@ -108,7 +108,7 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
         //设置返回数据
         String[] result = new String[5];
         result[0] = selectYear;
-        result[1] = selectMonth;
+        result[1] = CalendarManager.getInstance().getFixString(position + 1);
         result[2] = CalendarManager.getInstance().getFixString(Integer.parseInt((currentYear)));
         result[3] = CalendarManager.getInstance().getFixString(Integer.parseInt((currentMonth)));
         result[4] = CalendarManager.getInstance().getFixString(Integer.parseInt((currentDay)));
@@ -185,12 +185,15 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mTouchXPos = event.getX();
+                    case MotionEvent.ACTION_MOVE:
+                        if (mTouchXPos == 0) {
+                            mTouchXPos = event.getX();
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
                         mTouchSlideLeft = (mTouchXPos - event.getX() < 0) && (event.getX() - mTouchXPos) > 200 && (mViewPager.getCurrentItem() == 0);
                         mTouchSlideRight = (mTouchXPos - event.getX() > 0) && (mTouchXPos - event.getX()) > 200 && (mViewPager.getCurrentItem() == 11);
+                        mTouchXPos = 0;
                         break;
                 }
                 return false;

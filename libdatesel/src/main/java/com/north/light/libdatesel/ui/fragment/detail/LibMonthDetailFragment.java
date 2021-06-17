@@ -1,6 +1,10 @@
 package com.north.light.libdatesel.ui.fragment.detail;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.north.light.libdatesel.R;
 import com.north.light.libdatesel.bean.DayInMonthDetailInfo;
@@ -8,7 +12,9 @@ import com.north.light.libdatesel.model.CalendarManager;
 import com.north.light.libdatesel.utils.CalendarTrainUtils;
 import com.north.light.libdatesel.widget.DivCalendarDetailView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lzt
@@ -18,6 +24,7 @@ import java.util.List;
  * 描述：月份详情fragment
  */
 public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
+    private final String TAG = getClass().getSimpleName();
     /**
      * 当前fragment的月份位置
      */
@@ -30,6 +37,10 @@ public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
      * 日历显示控件
      */
     private DivCalendarDetailView mCalendarView;
+    /**
+     * 数据缓存标识map
+     */
+    private Map<String, Boolean> mCacheTAGMap = new HashMap<>();
 
     /**
      * @param position 月份所在一年中的位置
@@ -45,6 +56,12 @@ public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_lib_date_detail_month;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
     }
 
     @Override
@@ -87,6 +104,7 @@ public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
 
     /**
      * 获取数据
+     * change by lzt 20210617增加缓存逻辑判断，如果存在，则直接return
      */
     private void getData() {
         try {
@@ -97,7 +115,11 @@ public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
             String currentMonth = typeArray[3];
             String currentDay = typeArray[4];
             List<DayInMonthDetailInfo> info = CalendarManager.getInstance().getDayByMonth(year, month);
+            if (mCacheTAGMap.get(year + month) != null && mCacheTAGMap.get(year + month)) {
+                return;
+            }
             mCalendarView.setData(CalendarTrainUtils.getMonthList(info), currentYear + currentMonth + currentDay);
+            mCacheTAGMap.put(year + month, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
