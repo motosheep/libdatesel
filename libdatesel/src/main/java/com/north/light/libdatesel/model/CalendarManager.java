@@ -40,6 +40,16 @@ public class CalendarManager {
     }
 
     /**
+     * 获取当前年月日
+     */
+    public String getCurYMD(int interval) throws Exception {
+        String year = getYear(interval);
+        String month = getMonth(interval);
+        String day = getDay(interval);
+        return year + month + day;
+    }
+
+    /**
      * 获取当前年份
      *
      * @param interval 0当前年

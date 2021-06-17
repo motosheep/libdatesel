@@ -83,7 +83,7 @@ public class DivCalendarDetailView extends LinearLayout {
     /**
      * 设置模式，不同模式点击的效果也不同
      */
-    private void setMode(int mode) {
+    public void setMode(int mode) {
         this.mode = mode;
     }
 
@@ -98,7 +98,7 @@ public class DivCalendarDetailView extends LinearLayout {
             mDataRunnable = null;
         }
         mDataRunnable = new DataRunnable(org, currentTime);
-        this.postDelayed(mDataRunnable, 20);
+        this.post(mDataRunnable);
     }
 
     /**
@@ -190,6 +190,10 @@ public class DivCalendarDetailView extends LinearLayout {
                     detailTV.setTextColor(getContext().getResources().getColor(R.color.color_99000000));
                 } else {
                     detailTV.setTextColor(getContext().getResources().getColor(R.color.color_4D000000));
+                    if (mode == 2) {
+                        //年份模式隐藏补充的数据
+                        detailTV.setVisibility(View.INVISIBLE);
+                    }
                 }
                 detailTV.setTextSize(width / 56);
                 detailTV.setText(detailInfo.getDay());
@@ -200,8 +204,6 @@ public class DivCalendarDetailView extends LinearLayout {
                         if (mListener != null) {
                             if (mode == 1) {
                                 mListener.dayDetail(detailInfo);
-                            } else if (mode == 2) {
-                                mListener.monthDetail(detailInfo);
                             }
                         }
                         if (mode == 1) {
@@ -224,6 +226,25 @@ public class DivCalendarDetailView extends LinearLayout {
                 count++;
             }
         }
+        setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mode == 2) {
+                    try {
+                        if (mListener != null) {
+                            for (DivCalendarDetailInfo cache : mData) {
+                                if (cache.getCurrentMonth() == 1) {
+                                    mListener.monthDetail(cache.getYear(), cache.getMonth());
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -294,10 +315,10 @@ public class DivCalendarDetailView extends LinearLayout {
     public interface OnClickListener {
         public void dayDetail(DivCalendarDetailInfo info);
 
-        public void monthDetail(DivCalendarDetailInfo info);
+        public void monthDetail(String year, String month);
     }
 
-    public void setOnClickListener(OnClickListener listener) {
+    public void setOnDateClickListener(OnClickListener listener) {
         mListener = listener;
     }
 }

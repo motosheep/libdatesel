@@ -150,7 +150,7 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
         });
         updateTime();
         //移动position到对应的月份
-        mViewPager.setCurrentItem(Integer.parseInt(selectMonth) - 1, true);
+        mViewPager.setCurrentItem(Integer.parseInt(selectMonth) - 1, false);
     }
 
     private void initEvent() {
@@ -218,14 +218,14 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
             //更新缓存数据
             selectYear = String.valueOf(selYear);
             DateMemoryInfo.getInstance().setCurrentYear(String.valueOf(selYear));
-            mViewPager.setCurrentItem(0, true);
+            mViewPager.setCurrentItem(0, false);
         } else if (type == 2) {
             Integer selYear = Integer.valueOf(DateMemoryInfo.getInstance().getCurrentYear());
             selYear = selYear - 1;
             //更新缓存数据
             selectYear = String.valueOf(selYear);
             DateMemoryInfo.getInstance().setCurrentYear(String.valueOf(selYear));
-            mViewPager.setCurrentItem(11, true);
+            mViewPager.setCurrentItem(11, false);
         }
     }
 

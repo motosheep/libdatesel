@@ -14,6 +14,10 @@ import com.north.light.libdatesel.ui.fragment.LibDateYearFragment;
  * 多功能日期选择
  */
 public class LibSelDateXActivity extends LibDateBaseActivity {
+    /**
+     * 当前fragment的位置:1年份 2月份
+     */
+    private int mCurrentFragmentPos = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +45,22 @@ public class LibSelDateXActivity extends LibDateBaseActivity {
         changeContent(2);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mCurrentFragmentPos != 2) {
+            changeContent(2);
+            return;
+        }
+        super.onBackPressed();
+    }
+
     /**
      * 切换显示的fragment
      *
      * @param type 1年份 2月份
      */
     public void changeContent(int type) {
+        mCurrentFragmentPos = type;
         switch (type) {
             case 1:
                 getSupportFragmentManager().beginTransaction()
