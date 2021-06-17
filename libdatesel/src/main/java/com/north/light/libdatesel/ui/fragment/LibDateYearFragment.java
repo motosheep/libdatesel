@@ -110,13 +110,11 @@ public class LibDateYearFragment extends LibDateXBaseFragment {
         mContentViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d(TAG, "onPageScrolled:" + position);
 
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(TAG, "onPageSelected:" + position);
 
             }
 
@@ -125,20 +123,20 @@ public class LibDateYearFragment extends LibDateXBaseFragment {
                 if (state == 0) {
                     int itemPos = mContentViewPager.getCurrentItem();
                     if (itemPos == 0 && mTouchSlideLeft) {
-                        Log.d(TAG, "上一个十年");
                         mCurrentYear = String.valueOf(Integer.parseInt(mCurrentYear) - 1);
                         itemPos = culMovePos();
+                        mViewPagerCurPos = itemPos;
                         mContentViewPager.setCurrentItem(itemPos, false);
                     } else if (itemPos == 9 && mTouchSlideRight) {
-                        Log.d(TAG, "下一个十年");
                         mCurrentYear = String.valueOf(Integer.parseInt(mCurrentYear) + 1);
                         itemPos = culMovePos();
+                        mViewPagerCurPos = itemPos;
                         mContentViewPager.setCurrentItem(itemPos, false);
                     } else {
                         int interval = itemPos - mViewPagerCurPos;
+                        mViewPagerCurPos = itemPos;
                         mCurrentYear = String.valueOf(Integer.parseInt(mCurrentYear) + interval);
                     }
-                    mViewPagerCurPos = itemPos;
                     updateUI();
                     Log.d(TAG, "state:" + state);
                 }
@@ -190,7 +188,12 @@ public class LibDateYearFragment extends LibDateXBaseFragment {
     /**
      * 获取当前年份
      */
-    public String getCurrentYear() {
+    public String getCurrentYear(int position) {
+        if (position > mViewPagerCurPos) {
+            return String.valueOf(Integer.parseInt(mCurrentYear) + 1);
+        } else if (position < mViewPagerCurPos) {
+            return String.valueOf(Integer.parseInt(mCurrentYear) - 1);
+        }
         return mCurrentYear;
     }
 }

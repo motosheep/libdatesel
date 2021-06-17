@@ -1,14 +1,13 @@
 package com.north.light.libdatesel.ui.fragment.detail;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
 import com.north.light.libdatesel.R;
 import com.north.light.libdatesel.bean.DayInMonthDetailInfo;
-import com.north.light.libdatesel.model.CalendarManager;
+import com.north.light.libdatesel.memory.DateMemoryInfo;
 import com.north.light.libdatesel.utils.CalendarTrainUtils;
 import com.north.light.libdatesel.widget.DivCalendarDetailView;
 
@@ -114,7 +113,7 @@ public class LibMonthDetailFragment extends LibDateDetailXBaseFragment {
             String currentYear = typeArray[2];
             String currentMonth = typeArray[3];
             String currentDay = typeArray[4];
-            List<DayInMonthDetailInfo> info = CalendarManager.getInstance().getDayByMonth(year, month);
+            List<DayInMonthDetailInfo> info = DateMemoryInfo.getInstance().getMonth(year, month);
             if (mCacheTAGMap.get(year + month) != null && mCacheTAGMap.get(year + month)) {
                 return;
             }

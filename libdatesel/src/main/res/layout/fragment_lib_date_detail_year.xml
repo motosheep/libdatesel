@@ -6,6 +6,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_lib_date_detail_year_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
 
 </RelativeLayout>

@@ -28,9 +28,9 @@ public abstract class LibDateDetailXBaseFragment extends LibDateBaseFragment {
     /**
      * 获取当前年份
      */
-    public String getCurrentYear() {
+    public String getCurrentYear(int position) {
         try {
-            return ((LibDateYearFragment) getParentFragment()).getCurrentYear();
+            return ((LibDateYearFragment) getParentFragment()).getCurrentYear(position);
         } catch (Exception e) {
             return "";
         }

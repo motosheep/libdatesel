@@ -1,7 +1,9 @@
 package com.north.light.libdatesel.widget;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -135,6 +137,7 @@ public class DivCalendarDetailView extends LinearLayout {
             titleDesc.setTextColor(getContext().getResources().getColor(R.color.color_4D000000));
             titleDesc.setTextSize(width / 90);
             titleDesc.setText(changeDigitalToChinese(i + 1));
+            titleDesc.setTypeface(Typeface.DEFAULT_BOLD);
         }
         //内容控件
         List<List<DivCalendarDetailInfo>> listSplitRes = ListSpilt.splitList(mData, 7);
@@ -195,6 +198,7 @@ public class DivCalendarDetailView extends LinearLayout {
                         detailTV.setVisibility(View.INVISIBLE);
                     }
                 }
+                detailTV.setTypeface(Typeface.DEFAULT_BOLD);
                 detailTV.setTextSize(width / 56);
                 detailTV.setText(detailInfo.getDay());
                 final int finalCount = count;

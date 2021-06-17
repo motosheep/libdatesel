@@ -2,7 +2,9 @@ package com.north.light.libdatesel.ui.fragment.detail;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,11 +12,11 @@ import com.north.light.libdatesel.R;
 import com.north.light.libdatesel.adapter.LibMonthInYearAdapter;
 import com.north.light.libdatesel.bean.MonthInYearDetailInfo;
 import com.north.light.libdatesel.memory.DateMemoryInfo;
-import com.north.light.libdatesel.model.CalendarManager;
 import com.north.light.libdatesel.ui.fragment.LibDateYearFragment;
 import com.north.light.libdatesel.utils.CalendarTrainUtils;
 import com.north.light.libdatesel.widget.LibMonthInYearDecoration;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +45,10 @@ public class LibYearDateDetailFragment extends LibDateDetailXBaseFragment {
      * info recycler view
      */
     private RecyclerView mInfoRecyclerView;
+    /**
+     * 数据缓存标识map
+     */
+    private Map<String, Boolean> mCacheTAGMap = new HashMap<>();
 
 
     /**
@@ -59,13 +65,6 @@ public class LibYearDateDetailFragment extends LibDateDetailXBaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_lib_date_detail_year;
-    }
-
-    @Override
-    protected void onFragmentFirstVisible() {
-        super.onFragmentFirstVisible();
-        initView();
-        initEvent();
     }
 
     private void initEvent() {
@@ -88,6 +87,13 @@ public class LibYearDateDetailFragment extends LibDateDetailXBaseFragment {
         }
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+        initEvent();
+        getData();
+    }
 
     private void initView() {
         mInfoAdapter = new LibMonthInYearAdapter();
@@ -103,12 +109,15 @@ public class LibYearDateDetailFragment extends LibDateDetailXBaseFragment {
     private void getData() {
         try {
             mCurrentPos = getArguments().getInt(DATA_POSITION, 0);
-            String currentYear = getCurrentYear();
+            String currentYear = getCurrentYear(mCurrentPos);
+            if (mCacheTAGMap.get(currentYear) != null && mCacheTAGMap.get(currentYear)) {
+                return;
+            }
             Log.d(TAG, "数据获取时间1:" + System.currentTimeMillis());
-            Map<String, MonthInYearDetailInfo> infoMap = CalendarManager.getInstance().getMonthByYear(currentYear);
+            List<MonthInYearDetailInfo> trainResult = CalendarTrainUtils.getYearList(DateMemoryInfo.getInstance().getYear(currentYear));
             Log.d(TAG, "数据获取时间2:" + System.currentTimeMillis());
-            List<MonthInYearDetailInfo> trainResult = CalendarTrainUtils.getYearList(infoMap);
             mInfoAdapter.setData(trainResult);
+            mCacheTAGMap.put(currentYear, true);
         } catch (Exception e) {
             Log.d(TAG, "数据获取错误:" + e.getMessage());
         }

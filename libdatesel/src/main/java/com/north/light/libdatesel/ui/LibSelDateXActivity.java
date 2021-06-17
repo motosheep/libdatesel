@@ -64,7 +64,6 @@ public class LibSelDateXActivity extends LibDateBaseActivity {
         switch (type) {
             case 1:
                 getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.scale_in, R.anim.scale_out)
                         .replace(R.id.activity_lib_sel_date_content, LibDateYearFragment.newInstance())
                         .commitAllowingStateLoss();
                 break;
