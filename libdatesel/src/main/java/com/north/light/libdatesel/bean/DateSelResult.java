@@ -8,15 +8,15 @@ import java.io.Serializable;
  * 描述：时间选择结果回调
  */
 public class DateSelResult implements Serializable {
-    private String year;
-    private String month;
-    private String day;
-    private String hour;
-    private String minute;
-    private String second;
+    private String year = "0000";
+    private String month = "01";
+    private String day = "01";
+    private String hour = "00";
+    private String minute = "00";
+    private String second = "00";
 
     public String getYear() {
-        return year;
+        return String.format("%04d", Integer.parseInt(year));
     }
 
     public void setYear(String year) {
@@ -24,7 +24,7 @@ public class DateSelResult implements Serializable {
     }
 
     public String getMonth() {
-        return month;
+        return String.format("%02d", Integer.parseInt(month));
     }
 
     public void setMonth(String month) {
@@ -32,7 +32,7 @@ public class DateSelResult implements Serializable {
     }
 
     public String getDay() {
-        return day;
+        return String.format("%02d", Integer.parseInt(day));
     }
 
     public void setDay(String day) {
@@ -40,7 +40,7 @@ public class DateSelResult implements Serializable {
     }
 
     public String getHour() {
-        return hour;
+        return String.format("%02d", Integer.parseInt(hour));
     }
 
     public void setHour(String hour) {
@@ -48,7 +48,7 @@ public class DateSelResult implements Serializable {
     }
 
     public String getMinute() {
-        return minute;
+        return String.format("%02d", Integer.parseInt(minute));
     }
 
     public void setMinute(String minute) {
@@ -56,7 +56,7 @@ public class DateSelResult implements Serializable {
     }
 
     public String getSecond() {
-        return second;
+        return String.format("%02d", Integer.parseInt(second));
     }
 
     public void setSecond(String second) {

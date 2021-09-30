@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class LibSelDateActivity extends LibDateBaseActivity {
+
+public class LibSelDateNormalActivity extends LibDateBaseActivity {
     public static final String CODE_REQUEST = "CODE_REQUEST";
-    //1年月日时分秒，2年月日时分 3年月日时，4年月日，5时分秒，6时分，7年月
+    //1年月日时分秒，2年月日时分 3年月日时，4年月日，5时分秒，6时分，7年月，8年
     private int mType = 1;
 
     private DivNumberPicker mYearPicker;
@@ -57,7 +58,6 @@ public class LibSelDateActivity extends LibDateBaseActivity {
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DateMain.getInstance().cancel();
                 finish();
             }
         });
@@ -105,7 +105,6 @@ public class LibSelDateActivity extends LibDateBaseActivity {
                         selResult.setHour(mHourNumList.get(hourPos).toString());
                         selResult.setMinute(mMinuteNumList.get(minutePos).toString());
                         selResult.setSecond(mSecondNumList.get(secondPos).toString());
-                        break;
                     case 6:
                         selResult.setHour(mHourNumList.get(hourPos).toString());
                         selResult.setMinute(mMinuteNumList.get(minutePos).toString());
@@ -113,6 +112,9 @@ public class LibSelDateActivity extends LibDateBaseActivity {
                     case 7:
                         selResult.setYear(mYearNumList.get(yearPos).toString());
                         selResult.setMonth(mMonthNumList.get(monthPos).toString());
+                        break;
+                    case 8:
+                        selResult.setYear(mYearNumList.get(yearPos).toString());
                         break;
                 }
                 DateMain.getInstance().onSelData(selResult);
@@ -124,15 +126,8 @@ public class LibSelDateActivity extends LibDateBaseActivity {
         mYearPicker.setOnValueChangedListener(new DateNumberPickerView.OnValueChangeListener() {
             @Override
             public void onValueChange(DateNumberPickerView picker, int oldVal, int newVal) {
-                if (Calendar.getInstance().get(Calendar.YEAR) == mYearNumList.get(newVal)) {
-                    //当前年
-                    resetMonth(2);
-                    setDayByMonth(mYearNumList.get(newVal), mMonthNumList.get(0));
-                } else {
-                    //非当前年，重置月份
-                    resetMonth(1);
-                    setDayByMonth(mYearNumList.get(newVal), mMonthNumList.get(0));
-                }
+                mMonthPicker.setValue(0);
+                setDayByMonth(mYearNumList.get(newVal), mMonthNumList.get(0));
             }
         });
         //选择月会影响到日
@@ -146,52 +141,19 @@ public class LibSelDateActivity extends LibDateBaseActivity {
     }
 
     /**
-     * 是否重置月份__非当前年重置月份
-     *
-     * @param type 1重置 2不重置
-     */
-    private void resetMonth(int type) {
-        mMonthList.clear();
-        mMonthNumList.clear();
-        int startMonth;
-        if (type == 1) {
-            startMonth = 1;
-        } else {
-            startMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
-        }
-        for (int i = startMonth; i <= 12; i++) {
-            mMonthList.add(String.format("%02d", i) + "月");
-            mMonthNumList.add(i);
-        }
-        mMonthPicker.refreshByNewDisplayedValues(mMonthList.toArray(new String[mMonthList.size()]));
-        mMonthPicker.setMaxValue(mMonthList.size() - 1); //设置最大值
-        mMonthPicker.setValue(0);
-    }
-
-    /**
      * 传入月份设置日期
      */
     private void setDayByMonth(int year, int month) {
         Calendar calendar = Calendar.getInstance();
-        int startMonth = calendar.get(Calendar.MONTH) + 1;
         calendar.set(Calendar.YEAR, year);
         //注意减去1，是因为月份从0开始
         calendar.set(Calendar.MONTH, month - 1);
         int curDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);//当前月份有多少天
         mDayList.clear();
         mDayNumList.clear();
-        if (startMonth == month) {
-            //如果选中的是当前月份，则计算日期时需要注意
-            int curDay2 = calendar.get(Calendar.DATE);//日
-            for (int i = curDay2; i <= curDay; i++) {
-                mDayList.add(String.format("%02d", i) + "日");
-                mDayNumList.add(i);
-            }
-        } else {
-            for (int i = 1; i <= curDay; i++) {
-                mDayList.add(String.format("%02d", i) + "日");
-                mDayNumList.add(i);
-            }
+        for (int i = 1; i <= curDay; i++) {
+            mDayList.add(String.format("%02d", i) + "日");
+            mDayNumList.add(i);
         }
         mDayPicker.refreshByNewDisplayedValues(mDayList.toArray(new String[mDayList.size()]));
         mDayPicker.setMaxValue(mDayList.size() - 1); //设置最大值
@@ -233,30 +195,34 @@ public class LibSelDateActivity extends LibDateBaseActivity {
             mHourPicker.setVisibility(View.GONE);
             mMinutePicker.setVisibility(View.GONE);
             mSecondPicker.setVisibility(View.GONE);
+        }else if (mType == 8) {
+            mMonthPicker.setVisibility(View.GONE);
+            mDayPicker.setVisibility(View.GONE);
+            mHourPicker.setVisibility(View.GONE);
+            mMinutePicker.setVisibility(View.GONE);
+            mSecondPicker.setVisibility(View.GONE);
         }
 
         //数据集合初始化
         //年
         Calendar startCal = Calendar.getInstance();
-//        startCal.setTimeInMillis(0);
+        startCal.setTimeInMillis(0);
         Calendar curCal = Calendar.getInstance();
         int startYear = startCal.get(Calendar.YEAR);
-        int endYear = curCal.get(Calendar.YEAR) + 1;
+        int endYear = curCal.get(Calendar.YEAR);
 
-        for (int i = startYear; i <= endYear; i++) {
+        for (int i = endYear; i >= startYear; i--) {
             mYearList.add(i + "年");
             mYearNumList.add(i);
         }
         //月
-        int startMonth = curCal.get(Calendar.MONTH);
-        for (int i = startMonth + 1; i <= 12; i++) {
+        for (int i = 1; i <= 12; i++) {
             mMonthList.add(String.format("%02d", i) + "月");
             mMonthNumList.add(i);
         }
         //日
         int curDay = curCal.getActualMaximum(Calendar.DAY_OF_MONTH);//当前月份有多少天
-        int curDay2 = curCal.get(Calendar.DATE);//日
-        for (int i = curDay2; i <= curDay; i++) {
+        for (int i = 1; i <= curDay; i++) {
             mDayList.add(String.format("%02d", i) + "日");
             mDayNumList.add(i);
         }
@@ -266,7 +232,7 @@ public class LibSelDateActivity extends LibDateBaseActivity {
             mHourNumList.add(i);
         }
         //分
-        for (int i = 0; i < 60; i++) {
+        for (int i = 1; i <= 60; i++) {
             mMinuteList.add(String.format("%02d", i) + "分");
             mMinuteNumList.add(i);
         }
@@ -277,44 +243,40 @@ public class LibSelDateActivity extends LibDateBaseActivity {
         }
         //设置数据----------------------------------------------------------
         //获取当前初始化数据__月日时分秒
-        try {
-            int cMonth = curCal.get(Calendar.MONTH);//从0开始
-            int cDay = curCal.get(Calendar.DATE) - 1;//日
-            int cHour = curCal.get(Calendar.HOUR_OF_DAY) - 1;//时
-            int cMinute = curCal.get(Calendar.MINUTE) - 1;//分
-            int cSecond = curCal.get(Calendar.SECOND) - 1;//秒
+        int cMonth = curCal.get(Calendar.MONTH);//从0开始
+        int cDay = curCal.get(Calendar.DATE) - 1;//日
+        int cHour = curCal.get(Calendar.HOUR_OF_DAY) - 1;//时
+        int cMinute = curCal.get(Calendar.MINUTE) - 1;//分
+        int cSecond = curCal.get(Calendar.SECOND) - 1;//秒
 
-            mYearPicker.refreshByNewDisplayedValues(mYearList.toArray(new String[mYearList.size()]));
-            mYearPicker.setMaxValue(mYearList.size() - 1); //设置最大值
-            mYearPicker.setWrapSelectorWheel(true);
+        mYearPicker.refreshByNewDisplayedValues(mYearList.toArray(new String[mYearList.size()]));
+        mYearPicker.setMaxValue(mYearList.size() - 1); //设置最大值
+        mYearPicker.setWrapSelectorWheel(true);
 
-            mMonthPicker.refreshByNewDisplayedValues(mMonthList.toArray(new String[mMonthList.size()]));
-            mMonthPicker.setMaxValue(mMonthList.size() - 1); //设置最大值
-            mMonthPicker.setWrapSelectorWheel(true);
-            mMonthPicker.setValue(0);
+        mMonthPicker.refreshByNewDisplayedValues(mMonthList.toArray(new String[mMonthList.size()]));
+        mMonthPicker.setMaxValue(mMonthList.size() - 1); //设置最大值
+        mMonthPicker.setWrapSelectorWheel(true);
+        mMonthPicker.setValue(cMonth);
 
-            mDayPicker.refreshByNewDisplayedValues(mDayList.toArray(new String[mDayList.size()]));
-            mDayPicker.setMaxValue(mDayList.size() - 1); //设置最大值
-            mDayPicker.setWrapSelectorWheel(true);
-            mDayPicker.setValue(0);
+        mDayPicker.refreshByNewDisplayedValues(mDayList.toArray(new String[mDayList.size()]));
+        mDayPicker.setMaxValue(mDayList.size() - 1); //设置最大值
+        mDayPicker.setWrapSelectorWheel(true);
+        mDayPicker.setValue(cDay);
 
-            mHourPicker.refreshByNewDisplayedValues(mHourList.toArray(new String[mHourList.size()]));
-            mHourPicker.setMaxValue(mHourList.size() - 1); //设置最大值
-            mHourPicker.setWrapSelectorWheel(true);
-            mHourPicker.setValue(cHour);
+        mHourPicker.refreshByNewDisplayedValues(mHourList.toArray(new String[mHourList.size()]));
+        mHourPicker.setMaxValue(mHourList.size() - 1); //设置最大值
+        mHourPicker.setWrapSelectorWheel(true);
+        mHourPicker.setValue(cHour);
 
-            mMinutePicker.refreshByNewDisplayedValues(mMinuteList.toArray(new String[mMinuteList.size()]));
-            mMinutePicker.setMaxValue(mMinuteList.size() - 1); //设置最大值
-            mMinutePicker.setWrapSelectorWheel(true);
-            mMinutePicker.setValue(cMinute);
+        mMinutePicker.refreshByNewDisplayedValues(mMinuteList.toArray(new String[mMinuteList.size()]));
+        mMinutePicker.setMaxValue(mMinuteList.size() - 1); //设置最大值
+        mMinutePicker.setWrapSelectorWheel(true);
+        mMinutePicker.setValue(cMinute);
 
-            mSecondPicker.refreshByNewDisplayedValues(mSecondList.toArray(new String[mSecondList.size()]));
-            mSecondPicker.setMaxValue(mSecondList.size() - 1); //设置最大值
-            mSecondPicker.setWrapSelectorWheel(true);
-            mSecondPicker.setValue(cSecond);
-        } catch (Exception e) {
-
-        }
+        mSecondPicker.refreshByNewDisplayedValues(mSecondList.toArray(new String[mSecondList.size()]));
+        mSecondPicker.setMaxValue(mSecondList.size() - 1); //设置最大值
+        mSecondPicker.setWrapSelectorWheel(true);
+        mSecondPicker.setValue(cSecond);
 
     }
 

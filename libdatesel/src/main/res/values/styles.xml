@@ -1,10 +1,5 @@
 <resources>
-
-
-    <style name="AppNormal" parent="Theme.AppCompat.NoActionBar">
-    </style>
-
-    <style name="AppTranslucent" parent="Theme.AppCompat.NoActionBar">
+    <style name="DateAppTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/color_00000000</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

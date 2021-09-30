@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                DateMain.getInstance().show(MainActivity.this, 1);
-                DateMain.getInstance().showX(MainActivity.this);
+                DateMain.getInstance().showNormal(MainActivity.this,1);
             }
         });
         DateMain.getInstance().setOnDateListener(callBack);
@@ -33,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void Date(DateSelResult result) {
             Log.d(TAG, "选择的日期: " + new Gson().toJson(result));
+        }
+
+        @Override
+        public void timeStamp(Long time) {
+
+        }
+
+        @Override
+        public void cancel() {
+
         }
     };
 
