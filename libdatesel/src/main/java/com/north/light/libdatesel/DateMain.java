@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.north.light.libdatesel.bean.DateSelResult;
 import com.north.light.libdatesel.ui.LibSelDateActivity;
 import com.north.light.libdatesel.ui.LibSelDateNormalActivity;
+import com.north.light.libdatesel.ui.LibSelDateXActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -74,6 +75,14 @@ public class DateMain {
     public void showNormal(Activity activity, int type) {
         Intent intent = new Intent(activity, LibSelDateNormalActivity.class);
         intent.putExtra(LibSelDateNormalActivity.CODE_REQUEST, type);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 启动新版日期选择视觉
+     * */
+    public void showNewVersionDate(Activity activity,int type){
+        Intent intent = new Intent(activity, LibSelDateXActivity.class);
         activity.startActivity(intent);
     }
 

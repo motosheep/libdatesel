@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                DateMain.getInstance().show(MainActivity.this, 1);
-                DateMain.getInstance().showNormal(MainActivity.this,1);
+//                DateMain.getInstance().showNormal(MainActivity.this,1);
+                DateMain.getInstance().showNewVersionDate(MainActivity.this,1);
             }
         });
         DateMain.getInstance().setOnDateListener(callBack);

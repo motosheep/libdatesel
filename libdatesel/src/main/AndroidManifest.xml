@@ -4,9 +4,11 @@
 
     <application>
         <activity
+            android:name=".ui.LibSelDateXActivity"
+            android:theme="@style/DateAppNormal" />
+        <activity
             android:name=".ui.LibSelDateActivity"
-            android:theme="@style/DateAppTranslucent"
-            android:launchMode="singleTask"/>
+            android:theme="@style/DateAppTranslucent"/>
         <activity
             android:name=".ui.LibSelDateNormalActivity"
             android:theme="@style/DateAppTranslucent"

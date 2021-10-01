@@ -12,6 +12,7 @@ import com.north.light.libdatesel.ui.fragment.LibDateYearFragment;
 
 /**
  * 多功能日期选择
+ * 年/月 -- 模式选择
  */
 public class LibSelDateXActivity extends LibDateBaseActivity {
     /**
