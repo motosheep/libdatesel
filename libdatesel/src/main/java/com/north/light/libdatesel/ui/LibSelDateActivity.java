@@ -291,27 +291,27 @@ public class LibSelDateActivity extends LibDateBaseActivity {
             mMonthPicker.refreshByNewDisplayedValues(mMonthList.toArray(new String[mMonthList.size()]));
             mMonthPicker.setMaxValue(mMonthList.size() - 1); //设置最大值
             mMonthPicker.setWrapSelectorWheel(true);
-            mMonthPicker.setValue(0);
+            mMonthPicker.setValue(Math.max(0, cMonth));
 
             mDayPicker.refreshByNewDisplayedValues(mDayList.toArray(new String[mDayList.size()]));
             mDayPicker.setMaxValue(mDayList.size() - 1); //设置最大值
             mDayPicker.setWrapSelectorWheel(true);
-            mDayPicker.setValue(0);
+            mDayPicker.setValue(Math.max(0, cDay));
 
             mHourPicker.refreshByNewDisplayedValues(mHourList.toArray(new String[mHourList.size()]));
             mHourPicker.setMaxValue(mHourList.size() - 1); //设置最大值
             mHourPicker.setWrapSelectorWheel(true);
-            mHourPicker.setValue(cHour);
+            mHourPicker.setValue(Math.max(0, cHour));
 
             mMinutePicker.refreshByNewDisplayedValues(mMinuteList.toArray(new String[mMinuteList.size()]));
             mMinutePicker.setMaxValue(mMinuteList.size() - 1); //设置最大值
             mMinutePicker.setWrapSelectorWheel(true);
-            mMinutePicker.setValue(cMinute);
+            mMinutePicker.setValue(Math.max(0, cMinute));
 
             mSecondPicker.refreshByNewDisplayedValues(mSecondList.toArray(new String[mSecondList.size()]));
             mSecondPicker.setMaxValue(mSecondList.size() - 1); //设置最大值
             mSecondPicker.setWrapSelectorWheel(true);
-            mSecondPicker.setValue(cSecond);
+            mSecondPicker.setValue(Math.max(0, cSecond));
         } catch (Exception e) {
 
         }
