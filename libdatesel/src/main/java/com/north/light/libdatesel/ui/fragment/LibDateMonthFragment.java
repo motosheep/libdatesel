@@ -91,7 +91,6 @@ public class LibDateMonthFragment extends LibDateXBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override

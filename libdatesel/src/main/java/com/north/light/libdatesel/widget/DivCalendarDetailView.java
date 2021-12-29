@@ -136,7 +136,7 @@ public class DivCalendarDetailView extends LinearLayout {
             titleDesc.setGravity(Gravity.CENTER);
             titleDesc.setTextColor(getContext().getResources().getColor(R.color.color_4D000000));
             titleDesc.setTextSize(width / 90);
-            titleDesc.setText(changeDigitalToChinese(i + 1));
+            titleDesc.setText(CalendarManager.getInstance().changeDigitalToChinese(i + 1));
             titleDesc.setTypeface(Typeface.DEFAULT_BOLD);
         }
         //内容控件

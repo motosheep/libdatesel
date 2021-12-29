@@ -13,6 +13,7 @@ import com.north.light.libdatesel.ui.fragment.LibDateYearFragment;
 /**
  * 多功能日期选择
  * 年/月 -- 模式选择
+ * change by lzt 20211229 周日开始or周一开始的模式
  */
 public class LibSelDateXActivity extends LibDateBaseActivity {
     /**
