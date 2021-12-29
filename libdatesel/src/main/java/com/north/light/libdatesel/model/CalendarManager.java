@@ -109,6 +109,7 @@ public class CalendarManager {
 
     /**
      * 获取某个月份下的日期信息
+     * change by lzt 20211229 增加对于年份一月份的判断，以及十二月份的判断
      *
      * @param year  格式yyyy-MM
      * @param month 格式yyyy-MM
@@ -144,7 +145,7 @@ public class CalendarManager {
                     monthCalendar.setTime(format.parse(lastMonth[0] + "-" + lastMonth[1] + "-" + (lastMonthTotalDay - sup)));
                     int lastDayOfWeek = monthCalendar.get(Calendar.DAY_OF_WEEK) - 1;
                     supCache.setDayOfWeek(getFixString(lastDayOfWeek));
-                    supCache.setYear(year);
+                    supCache.setYear(lastMonth[0]);
                     supCache.setMonth(lastMonth[1]);
                     supCache.setMonthDay(String.valueOf(supplyCount));
                     result.add(0, supCache);
@@ -176,7 +177,7 @@ public class CalendarManager {
                     supCache.setDayOfWeek(getFixString(futureDayOfWeek));
                     supCache.setMonth(futureMonth[1]);
                     supCache.setMonthDay(String.valueOf(futureCount));
-                    supCache.setYear(year);
+                    supCache.setYear(futureMonth[0]);
                     result.add(supCache);
                 }
             }

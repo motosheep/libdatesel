@@ -3,7 +3,6 @@ package com.north.light.libdatesel.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.north.light.libdatesel.R;
+import com.north.light.libdatesel.model.CalendarManager;
 import com.north.light.libdatesel.utils.ListSpilt;
 
 import java.util.ArrayList;
@@ -177,7 +177,19 @@ public class DivCalendarDetailView extends LinearLayout {
                 imgParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 mBg.setLayoutParams(imgParams);
                 if (detailInfo.getCurrentDay() == 1) {
-                    mBg.setBackgroundResource(R.drawable.shape_date_sel_day_of_month_default_bg);
+                    if (mode == 1) {
+                        mBg.setBackgroundResource(R.drawable.shape_date_sel_day_of_month_default_bg);
+                    } else if (mode == 2) {
+                        try {
+                            String year = CalendarManager.getInstance().getYear(0);
+                            //年份模式下，若当前月，不符合，则不显示选中
+                            if (detailInfo.getCurrentMonth() == 1 && detailInfo.getYear().equals(year)) {
+                                mBg.setBackgroundResource(R.drawable.shape_date_sel_day_of_month_default_bg);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 mSelBgList.add(mBg);
                 //文字
@@ -287,19 +299,19 @@ public class DivCalendarDetailView extends LinearLayout {
     private String changeDigitalToChinese(int org) {
         switch (org) {
             case 1:
-                return "一";
+                return "周一";
             case 2:
-                return "二";
+                return "周二";
             case 3:
-                return "三";
+                return "周三";
             case 4:
-                return "四";
+                return "周四";
             case 5:
-                return "五";
+                return "周五";
             case 6:
-                return "六";
+                return "周六";
             case 7:
-                return "日";
+                return "周日";
         }
         return "";
     }
