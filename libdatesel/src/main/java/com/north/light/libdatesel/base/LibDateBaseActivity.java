@@ -8,7 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.north.light.libdatesel.R;
 
@@ -17,7 +17,7 @@ import com.north.light.libdatesel.R;
  * create by lzt
  * data 2019/12/8
  */
-public abstract class LibDateBaseActivity extends AppCompatActivity {
+public abstract class LibDateBaseActivity extends FragmentActivity {
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,4 +1,5 @@
 <resources>
+
     <style name="DateAppTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/color_00000000</item>
@@ -6,6 +7,5 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="DateAppNormal" parent="Theme.AppCompat.NoActionBar">
-    </style>
+    <style name="DateAppNormal" parent="Theme.AppCompat.NoActionBar"></style>
 </resources>

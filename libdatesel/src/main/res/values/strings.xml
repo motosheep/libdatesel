@@ -1,1 +1,6 @@
-<resources></resources>
+<resources>
+    <string name="lib_activity_date_lib_sel_date_cancel">取消</string>
+    <string name="lib_activity_date_lib_sel_date_confirm">确定</string>
+    <string name="lib_fragment_date_lib_sel_date_cancel">取消</string>
+    <string name="lib_fragment_date_lib_sel_date_confirm">确定</string>
+</resources>

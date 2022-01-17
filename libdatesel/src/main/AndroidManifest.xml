@@ -4,15 +4,25 @@
 
     <application>
         <activity
-            android:name=".ui.LibSelDateXActivity"
-            android:theme="@style/DateAppNormal" />
+            android:name=".v2.ui.LibDateXV2Activity"
+            android:exported="false"
+            android:theme="@style/DateAppTranslucent" />
         <activity
-            android:name=".ui.LibSelDateActivity"
-            android:theme="@style/DateAppTranslucent"/>
+            android:name=".v2.ui.LibDateNormalV2Activity"
+            android:exported="false"
+            android:theme="@style/DateAppTranslucent" />
         <activity
-            android:name=".ui.LibSelDateNormalActivity"
-            android:theme="@style/DateAppTranslucent"
-            android:launchMode="singleTask"/>
+            android:name=".v1.ui.LibSelDateActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/DateAppTranslucent" />
+        <activity
+            android:name=".v1.ui.LibSelDateNormalActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/DateAppTranslucent" />
+        <activity
+            android:name=".v1.ui.LibSelDateXActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/DateAppTranslucent" />
     </application>
 
 </manifest>

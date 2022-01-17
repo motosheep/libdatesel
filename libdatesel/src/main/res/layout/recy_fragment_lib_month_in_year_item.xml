@@ -13,7 +13,7 @@
         android:textSize="24sp" />
 
 
-    <com.north.light.libdatesel.widget.DivCalendarDetailView
+    <com.north.light.libdatesel.v1.widget.LibDateDivCalendarDetailView
         android:id="@+id/recy_fragment_lib_month_in_year_item_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

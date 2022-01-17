@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:text="取消"
+            android:text="@string/lib_fragment_date_lib_sel_date_cancel"
             android:textColor="@color/color_000000"
             android:textSize="14sp" />
 
@@ -32,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="10dp"
-            android:text="确定"
+            android:text="@string/lib_fragment_date_lib_sel_date_confirm"
             android:textColor="@color/color_3385FF"
             android:textSize="14sp" />
 
@@ -51,7 +51,7 @@
         app:layout_constraintRight_toRightOf="parent">
 
 
-        <com.north.light.libdatesel.widget.DivNumberPicker
+        <com.north.light.libdatesel.widget.LibDateDivNumberPicker
             android:id="@+id/fragment_lib_sel_date_content_year"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -60,7 +60,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
-        <com.north.light.libdatesel.widget.DivNumberPicker
+        <com.north.light.libdatesel.widget.LibDateDivNumberPicker
             android:id="@+id/fragment_lib_sel_date_content_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -69,7 +69,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
-        <com.north.light.libdatesel.widget.DivNumberPicker
+        <com.north.light.libdatesel.widget.LibDateDivNumberPicker
             android:id="@+id/fragment_lib_sel_date_content_day"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -78,7 +78,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
-        <com.north.light.libdatesel.widget.DivNumberPicker
+        <com.north.light.libdatesel.widget.LibDateDivNumberPicker
             android:id="@+id/fragment_lib_sel_date_content_hour"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -87,7 +87,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
-        <com.north.light.libdatesel.widget.DivNumberPicker
+        <com.north.light.libdatesel.widget.LibDateDivNumberPicker
             android:id="@+id/fragment_lib_sel_date_content_minute"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -96,7 +96,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
-        <com.north.light.libdatesel.widget.DivNumberPicker
+        <com.north.light.libdatesel.widget.LibDateDivNumberPicker
             android:id="@+id/fragment_lib_sel_date_content_second"
             android:layout_width="0dp"
             android:layout_height="match_parent"

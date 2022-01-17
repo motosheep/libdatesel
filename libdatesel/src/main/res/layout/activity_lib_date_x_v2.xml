@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/color_FFFFFF"
+    android:orientation="vertical">
 
-    <com.north.light.libdatesel.v1.widget.LibDateDivCalendarDetailView
-        android:id="@+id/fragment_lib_date_detail_month"
+    <FrameLayout
+        android:id="@+id/activity_lib_date_x_v2_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

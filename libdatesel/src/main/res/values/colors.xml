@@ -5,12 +5,13 @@
     <color name="color_4d000000">#4d000000</color>
     <color name="color_FFFFFF">#FFFFFF</color>
     <color name="color_00FF42">#00FF42</color>
-    <color name="color_e60078D7">#e60078d7</color>
+    <color name="color_e63385FF">#3385FF</color>
     <color name="color_3385FF">#3385FF</color>
     <color name="color_4D000000">#4d000000</color>
     <color name="color_99000000">#99000000</color>
     <color name="color_EBEAEA">#EBEAEA</color>
     <color name="color_99979797">#99979797</color>
+    <color name="color_E9290F">#E9290F</color>
 
 
 </resources>

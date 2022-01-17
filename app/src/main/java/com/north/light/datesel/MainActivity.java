@@ -2,13 +2,15 @@ package com.north.light.datesel;
 
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.north.light.libdatesel.DateMain;
-import com.north.light.libdatesel.bean.DateSelResult;
+import com.north.light.libdatesel.bean.LibDateSelResult;
+import com.north.light.libdatesel.callback.DateSelInfoCallBack;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,15 +26,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                DateMain.getInstance().show(MainActivity.this, 1);
 //                DateMain.getInstance().showNormal(MainActivity.this,1);
-                DateMain.getInstance().showNewVersionDate(MainActivity.this,1);
+                DateMain.getDateInstance().showXSel(MainActivity.this);
             }
         });
-        DateMain.getInstance().setOnDateListener(callBack);
+        DateMain.getDateInstance().setOnDateListener(callBack);
     }
 
-    private DateMain.DateSelInfoCallBack callBack = new DateMain.DateSelInfoCallBack() {
+    private DateSelInfoCallBack callBack = new DateSelInfoCallBack() {
+
         @Override
-        public void Date(DateSelResult result) {
+        public void Date(LibDateSelResult result) {
             Log.d(TAG, "选择的日期: " + new Gson().toJson(result));
         }
 
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        DateMain.getInstance().removeDateListener(callBack);
+        DateMain.getDateInstance().removeDateListener(callBack);
         super.onDestroy();
     }
 }
